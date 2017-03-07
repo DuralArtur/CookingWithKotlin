@@ -1,4 +1,4 @@
-package com.example.android.cookingwithkotlin
+package com.example.android.cookingwithkotlin.utils
 
 import android.support.v7.widget.SearchView
 import android.view.View
@@ -18,3 +18,5 @@ fun SearchView.onQueryText(submit: (String) -> Boolean = { false }, textChange: 
         override fun onQueryTextChange(newText: String): Boolean = textChange(newText)
     })
 }
+
+

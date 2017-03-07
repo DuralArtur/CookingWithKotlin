@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/ingNameTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="NAME"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/proteinTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="P"/>
+
+        <EditText
+            android:id="@+id/carbsTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="C"/>
+
+        <EditText
+            android:id="@+id/fatTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="F"/>
+        <EditText
+            android:id="@+id/kcalTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="kCal"/>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/addIngButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

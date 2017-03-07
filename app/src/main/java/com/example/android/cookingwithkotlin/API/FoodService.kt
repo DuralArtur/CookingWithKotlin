@@ -1,5 +1,6 @@
 package com.example.android.cookingwithkotlin.API
 
+import com.example.android.cookingwithkotlin.classes.SearchResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.Call

@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.ingredient_item.view.*
 /**
  * Created by Artur on 03-Mar-17.
  */
-class APISearchAdapter(val foodsList: List<Food>, val itemClick: (Food) -> Unit): RecyclerView.Adapter<APISearchAdapter.ViewHolder>() {
+class MyIngredientsAdapter(val ingredientsList: RealmResults<Ingredient>, val itemClick: (Ingredient) -> Unit): RecyclerView.Adapter<MyIngredientsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.ingredient_item,parent,false)
@@ -23,16 +23,16 @@ class APISearchAdapter(val foodsList: List<Food>, val itemClick: (Food) -> Unit)
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.bindIngredients(foodsList[position])
+        holder?.bindIngredients(ingredientsList[position])
     }
 
-    override fun getItemCount() = foodsList.size
+    override fun getItemCount() = ingredientsList.size
 
-    class ViewHolder(view: View, val itemClick: (Food) -> Unit) : RecyclerView.ViewHolder(view){
+    class ViewHolder(view: View, val itemClick: (Ingredient) -> Unit) : RecyclerView.ViewHolder(view){
 
-        fun bindIngredients(food: Food){
-            with(food.name){
-                itemView.ingredientName.text = food.name
+        fun bindIngredients(ingredient: Ingredient){
+            with(ingredient.name){
+                itemView.ingredientName.text = ingredient.name
             }
         }
     }

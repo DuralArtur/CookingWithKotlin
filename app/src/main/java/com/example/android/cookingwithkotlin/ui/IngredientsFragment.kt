@@ -1,19 +1,14 @@
 package com.example.android.cookingwithkotlin.ui
 
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.example.android.cookingwithkotlin.R
-import com.example.android.cookingwithkotlin.R.string.ingredients
 import kotlinx.android.synthetic.main.fragment_ingredients.*
-import java.text.FieldPosition
 import kotlin.properties.Delegates
 
 
@@ -25,7 +20,7 @@ class IngredientsFragment : Fragment() {
         val TAG: String = IngredientsFragment::class.java.simpleName
     }
 
-    val ingMenu = resources.getStringArray(R.array.ingredients_menu)
+    private var ingMenu: Array<String> by Delegates.notNull()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,23 +31,24 @@ class IngredientsFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ingMenu = resources.getStringArray(R.array.ingredients_menu)
 
-        val adaptek = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, ingMenu)
+        val adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, ingMenu)
 
-        ingredientsMenuListView.adapter = adaptek
-//        ingredientsMenuListView.setOnItemClickListener {
-//            adapterView, view, i, l ->
-//            swapFragment(ingredientsMenuListView.getItemAtPosition(i).toString())
-//        }
+        ingredientsMenuListView.adapter = adapter
+        ingredientsMenuListView.setOnItemClickListener {
+            adapterView, view, i, l ->
+            swapFragment(ingredientsMenuListView.getItemAtPosition(i).toString())
+        }
     }
 
     private fun swapFragment(name: String) {
         var fr: Fragment
         when (name) {
-            ingMenu[0] -> fr = APISearchFragment()
+            ingMenu[0] -> fr = MyIngredientsFragment()
             ingMenu[1] -> fr = APISearchFragment()
-            ingMenu[2] -> fr = APISearchFragment()
-            else -> fr = APISearchFragment()
+            ingMenu[2] -> fr = AddIngredientFragment()
+            else -> return
         }
             fragmentManager?.beginTransaction()?.replace(R.id.containerLayout, fr)?.addToBackStack(null)?.commit()
     }

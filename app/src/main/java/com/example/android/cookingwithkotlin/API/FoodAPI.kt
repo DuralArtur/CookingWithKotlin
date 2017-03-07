@@ -1,5 +1,6 @@
 package com.example.android.cookingwithkotlin.API
 
+import com.example.android.cookingwithkotlin.classes.SearchResult
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -1,4 +1,4 @@
-package com.example.android.cookingwithkotlin
+package com.example.android.cookingwithkotlin.classes
 
 /**
  * Created by Artur on 03-Mar-17.

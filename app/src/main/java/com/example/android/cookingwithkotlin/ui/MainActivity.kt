@@ -7,14 +7,16 @@ import android.os.Bundle
 import android.support.design.internal.BottomNavigationMenu
 import android.support.design.widget.BottomNavigationView
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.android.cookingwithkotlin.R
 import com.example.android.cookingwithkotlin.ui.RecipesFragment
-import com.example.android.cookingwithkotlin.realmClass.Ingredient
-import com.example.android.cookingwithkotlin.realmClass.Recipe
-import com.example.android.cookingwithkotlin.realmClass.Step
+import com.example.android.cookingwithkotlin.classes.Ingredient
+import com.example.android.cookingwithkotlin.classes.Recipe
+import com.example.android.cookingwithkotlin.classes.Step
 import io.realm.Realm
+import io.realm.RealmList
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import org.jetbrains.anko.defaultSharedPreferences
@@ -29,23 +31,22 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private var realm: Realm by Delegates.notNull()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportFragmentManager?.beginTransaction()?.add(R.id.containerLayout, RecipesFragment())?.commit()
+//        supportFragmentManager?.beginTransaction()?.add(R.id.containerLayout, RecipesFragment())?.commit()
         realm = Realm.getDefaultInstance()
         realm.executeTransaction {
             realm.deleteAll()
         }
         basicCRUD(realm)
-
         val id = defaultSharedPreferences.getInt("selected_item", R.id.action_favourites)
+        Log.v(TAG,resources.getInteger(id).toString())
         val menuItem = bottom_navigation.menu.findItem(id)
         bottom_navigation.setOnNavigationItemSelectedListener(this)
         bottom_navigation.menu.findItem(id).isChecked = true
-
         onNavigationItemSelected(menuItem)
-
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -60,7 +61,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 supportFragmentManager?.beginTransaction()?.replace(R.id.containerLayout, RecipesFragment())?.commit()
             }
         }
-        defaultSharedPreferences.edit().putInt("selected_item", item.itemId)
+        defaultSharedPreferences.edit().putInt("selected_item", item.itemId).apply()
         return true
     }
 
@@ -72,12 +73,18 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         realm.executeTransaction {
             val recipe = realm.where(Recipe::class.java).findFirst()
             for (i in 0..1500) {
+                val ingredient = realm.createObject(Ingredient::class.java)
+                ingredient.name = "Kurczak_$i"
+
                 val step = realm.createObject(Step::class.java)
                 step.description = "dodej cwikle_$i"
                 recipe.steps.add(step)
             }
-
         }
+    }
 
+    override fun onPause() {
+        super.onPause()
+        realm.close()
     }
 }

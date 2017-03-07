@@ -31,16 +31,16 @@ import org.jetbrains.anko.support.v4.uiThread
 import org.jetbrains.anko.uiThread
 import kotlin.properties.Delegates
 import com.example.android.cookingwithkotlin.utils.onQueryText
+import kotlinx.android.synthetic.main.fragment_addingredient.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class APISearchFragment : Fragment() {
+class AddIngredientFragment : Fragment() {
     companion object {
-        val TAG: String = APISearchFragment::class.java.simpleName
+        val TAG: String = AddIngredientFragment::class.java.simpleName
     }
 
-    private var foodsList: SearchResult by Delegates.notNull()
     private var realm: Realm by Delegates.notNull()
     override fun onCreate(args: Bundle?) {
         super.onCreate(args)
@@ -49,33 +49,26 @@ class APISearchFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_apisearch, container, false)
+        // Inflate the layout for this fragment
+        return inflater!!.inflate(R.layout.fragment_addingredient, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ingredientList.layoutManager = LinearLayoutManager(context)
-        search.onQueryText({
-            getFood(it)
-            true
-        })
     }
 
 
     override fun onResume() {
         super.onResume()
         realm = Realm.getDefaultInstance()
-
-    }
-
-    fun getFood(food: String) {
-        val foodManager: FoodManager = FoodManager()
-        doAsync {
-            foodsList = foodManager.getFoods(food)
-            uiThread {
-                val adapter = APISearchAdapter(foodsList.list.item) {
-                }
-                ingredientList.adapter = adapter
+        addIngButton.setOnClickListener {
+            realm.executeTransaction {
+                val ing = realm.createObject(Ingredient::class.java)
+                ing.name = ingNameTV.text.toString()
+                ing.protein = proteinTV.text.toString().toInt()
+                ing.carbs = carbsTV.text.toString().toInt()
+                ing.fat = fatTV.text.toString().toInt()
+                ing.kcal = kcalTV.text.toString().toInt()
             }
         }
     }

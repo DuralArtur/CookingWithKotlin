@@ -1,6 +1,6 @@
 package com.example.android.cookingwithkotlin.API
 
-import com.example.android.cookingwithkotlin.SearchResult
+import com.example.android.cookingwithkotlin.classes.SearchResult
 
 /**
  * Created by Artur on 03-Mar-17.

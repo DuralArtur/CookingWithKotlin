@@ -5,12 +5,11 @@
     <string name="favourites">Favourites</string>
     <string name="ingredients">Ingredients</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="ingredients_menu">
         <item name="myIngredients">My Ingredients</item>
-        <item name="searchIngrdient">Find Ingredient in DB</item>
+        <item name="searchIngredient">Find Ingredient in DB</item>
         <item name="addIngredient">Add Ingredient</item>
     </string-array>
 
